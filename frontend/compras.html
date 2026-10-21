@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STAR CLOCK | Compras</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="dashboard-body">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <i class="fa-solid fa-clock"></i>
+            <span>STAR CLOCK</span>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="dashboard.html" class="menu-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+
+            <a href="productos.html" class="menu-item">
+                <i class="fa-solid fa-shirt"></i>
+                <span>Productos</span>
+            </a>
+
+            <a href="proveedores.html" class="menu-item">
+                <i class="fa-solid fa-truck"></i>
+                <span>Proveedores</span>
+            </a>
+
+            <a href="clientes.html" class="menu-item">
+                <i class="fa-solid fa-users"></i>
+                <span>Clientes</span>
+            </a>
+
+            <a href="stock.html" class="menu-item">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>Stock</span>
+            </a>
+
+            <a href="compras.html" class="menu-item active">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Compras</span>
+            </a>
+
+            <a href="ventas.html" class="menu-item">
+                <i class="fa-solid fa-cash-register"></i>
+                <span>Ventas</span>
+            </a>
+
+            <a href="usuarios.html" class="menu-item">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Usuarios</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-footer">
+
+            <button
+                class="btn-cerrar-sesion"
+                onclick="cerrarSesion()"
+            >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar sesión
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <div class="dashboard-header">
+
+            <div>
+                <h2>Compras</h2>
+                <p>Registro y administración de compras</p>
+            </div>
+
+            <div class="usuario-info">
+
+                <div class="usuario-icono">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div>
+                    <strong id="nombreUsuario">
+                        Usuario
+                    </strong>
+
+                    <small id="rolUsuario">
+                        Rol
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <section class="panel-section">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h4 class="mb-1">
+                        Lista de compras
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Compras registradas en STAR CLOCK
+                    </p>
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalCompra"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Nueva compra
+                </button>
+
+            </div>
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Proveedor</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Descripción</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaCompras">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL NUEVA COMPRA -->
+    <div
+        class="modal fade"
+        id="modalCompra"
+        tabindex="-1"
+    >
+        <div class="modal-dialog modal-xl">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Nueva compra
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                    ></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="formCompra">
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Proveedor
+                                </label>
+
+                                <select
+                                    id="proveedorCompra"
+                                    class="form-select"
+                                    required
+                                >
+                                    <option value="">
+                                        Seleccione proveedor
+                                    </option>
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Descripción
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="descripcionCompra"
+                                    class="form-control"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <h6>
+                            Agregar producto
+                        </h6>
+
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-3">
+
+                                <label class="form-label">
+                                    Producto
+                                </label>
+
+                                <select
+                                    id="productoCompra"
+                                    class="form-select"
+                                >
+                                    <option value="">
+                                        Seleccione producto
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-2 mb-3">
+
+                                <label class="form-label">
+                                    Cantidad
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="cantidadCompra"
+                                    class="form-control"
+                                    min="1"
+                                    value="1"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-2 mb-3">
+
+                                <label class="form-label">
+                                    Precio compra
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="precioCompra"
+                                    class="form-control"
+                                    min="0.01"
+                                    step="0.01"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-2 mb-3">
+
+                                <label class="form-label">
+                                    Precio venta
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="precioVentaCompra"
+                                    class="form-control"
+                                    min="0.01"
+                                    step="0.01"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-2 mb-3 d-flex align-items-end">
+
+                                <button
+                                    type="button"
+                                    class="btn btn-success w-100"
+                                    onclick="agregarItemCompra()"
+                                >
+                                    <i class="fa-solid fa-plus"></i>
+                                    Agregar
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>P. Compra</th>
+                                        <th>P. Venta</th>
+                                        <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="tablaDetalleCompra">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <div class="text-end mb-3">
+
+                            <h5>
+                                Total:
+                                Bs
+                                <span id="totalCompra">
+                                    0.00
+                                </span>
+                            </h5>
+
+                        </div>
+
+
+                        <div
+                            id="mensajeCompra"
+                            class="mb-3"
+                        ></div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Registrar compra
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- MODAL VER DETALLE -->
+    <div
+        class="modal fade"
+        id="modalVerCompra"
+        tabindex="-1"
+    >
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Detalle de compra
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                    ></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4">
+                            <strong>ID:</strong>
+                            <span id="verIdCompra"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>Proveedor:</strong>
+                            <span id="verProveedorCompra"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>Usuario:</strong>
+                            <span id="verUsuarioCompra"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4">
+                            <strong>Fecha:</strong>
+                            <span id="verFechaCompra"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>Total:</strong>
+                            Bs
+                            <span id="verTotalCompra"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>Estado:</strong>
+                            <span id="verEstadoCompra"></span>
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        <strong>Descripción:</strong>
+                        <span id="verDescripcionCompra"></span>
+                    </p>
+
+
+                    <hr>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered">
+
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>P. Compra</th>
+                                    <th>P. Venta</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tablaVerDetalleCompra">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <script src="js/comun.js"></script>
+    <script src="js/compras.js"></script>
+
+</body>
+</html>
