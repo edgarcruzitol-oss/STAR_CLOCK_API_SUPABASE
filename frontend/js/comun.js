@@ -72,3 +72,48 @@ function headersJSON() {
 
 
 cargarUsuario();
+
+// =====================================================
+// PIE DE PÁGINA GLOBAL
+// =====================================================
+
+function agregarFooterGlobal() {
+
+    const existeFooter =
+        document.getElementById("footerGlobal");
+
+    if (existeFooter) {
+        return;
+    }
+
+    const footer =
+        document.createElement("footer");
+
+    footer.id = "footerGlobal";
+
+    footer.className =
+        "text-center mt-4 mb-3 text-muted";
+
+    footer.innerHTML = `
+        <small>
+            © 2026 Edgar Panfilo Cruz Huanaco |
+            STAR CLOCK - Sistema de Compra, Venta e Inventario |
+            Proyecto académico
+        </small>
+    `;
+
+    const main =
+        document.querySelector("main");
+
+    if (main) {
+        main.appendChild(footer);
+    } else {
+        document.body.appendChild(footer);
+    }
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    agregarFooterGlobal
+);
