@@ -309,3 +309,57 @@ function agregarFooterGlobal() {
 // Como comun.js se carga al final del HTML,
 // podemos agregarlo directamente.
 agregarFooterGlobal();
+
+// =====================================================
+// AGREGAR MODELO 3D AL MENÚ GLOBAL
+// =====================================================
+
+function agregarModelo3DMenu() {
+
+    const menu =
+        document.querySelector(
+            ".sidebar-menu"
+        );
+
+    if (!menu) {
+        return;
+    }
+
+    if (
+        document.getElementById(
+            "menuModelo3D"
+        )
+    ) {
+        return;
+    }
+
+
+    const enlace =
+        document.createElement(
+            "a"
+        );
+
+
+    enlace.id =
+        "menuModelo3D";
+
+    enlace.href =
+        "modelo3d.html";
+
+    enlace.className =
+        "menu-item";
+
+
+    enlace.innerHTML = `
+        <i class="fa-solid fa-cube"></i>
+        <span>Modelo 3D</span>
+    `;
+
+
+    menu.appendChild(
+        enlace
+    );
+}
+
+
+agregarModelo3DMenu();

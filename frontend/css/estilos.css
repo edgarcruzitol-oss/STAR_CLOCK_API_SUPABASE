@@ -491,3 +491,48 @@ body {
     }
 
 }
+
+/* =====================================================
+   SIDEBAR CON CERRAR SESIÓN FIJO
+   ===================================================== */
+
+/* SIDEBAR */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    background: #0f172a;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 25px 18px;
+
+    overflow: hidden;
+}
+
+
+.sidebar-menu {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+
+.sidebar-footer {
+    margin-top: auto;
+
+    border-top: 1px solid #334155;
+
+    padding-top: 15px;
+
+    background: #0f172a;
+
+    flex-shrink: 0;
+}

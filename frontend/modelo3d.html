@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STAR CLOCK | Modelo 3D</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+        body {
+            margin: 0;
+            background: #0f172a;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenedor {
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #cbd5e1;
+        }
+
+        #visor3d {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+        }
+
+        .boton-volver {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .boton-volver:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .autor {
+            margin-top: 30px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+
+        <div class="contenedor">
+
+            <h1>
+                <i class="fa-solid fa-cube"></i>
+                Modelo 3D de Producto
+            </h1>
+
+            <p>
+                Representación interactiva de un producto
+                del inventario de STAR CLOCK.
+            </p>
+
+            <p>
+                Puedes arrastrar el modelo con el mouse
+                para cambiar su posición.
+            </p>
+
+            <div id="visor3d"></div>
+
+            <a
+                href="dashboard.html"
+                class="boton-volver"
+            >
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver al Dashboard
+            </a>
+
+            <div class="autor">
+                © 2026 Edgar Panfilo Cruz Huanaco |
+                STAR CLOCK - Sistema de Compra, Venta e Inventario |
+                Proyecto académico
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- THREE.JS -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    ></script>
+
+
+    <script>
+
+        // =====================================================
+        // CONTENEDOR
+        // =====================================================
+
+        const contenedor =
+            document.getElementById(
+                "visor3d"
+            );
+
+
+        // =====================================================
+        // ESCENA
+        // =====================================================
+
+        const escena =
+            new THREE.Scene();
+
+
+        // =====================================================
+        // CÁMARA
+        // =====================================================
+
+        const camara =
+            new THREE.PerspectiveCamera(
+                75,
+                contenedor.clientWidth /
+                contenedor.clientHeight,
+                0.1,
+                1000
+            );
+
+
+        // =====================================================
+        // RENDERER
+        // =====================================================
+
+        const renderer =
+            new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true
+            });
+
+
+        renderer.setSize(
+            contenedor.clientWidth,
+            contenedor.clientHeight
+        );
+
+
+        renderer.setPixelRatio(
+            window.devicePixelRatio
+        );
+
+
+        contenedor.appendChild(
+            renderer.domElement
+        );
+
+
+        // =====================================================
+        // CAJA 3D
+        // =====================================================
+
+        const geometria =
+            new THREE.BoxGeometry(
+                3,
+                2,
+                2
+            );
+
+
+        const material =
+            new THREE.MeshStandardMaterial({
+                color: 0x2563eb,
+                metalness: 0.3,
+                roughness: 0.4
+            });
+
+
+        const caja =
+            new THREE.Mesh(
+                geometria,
+                material
+            );
+
+
+        escena.add(
+            caja
+        );
+
+
+        // =====================================================
+        // PISO
+        // =====================================================
+
+        const geometriaPiso =
+            new THREE.PlaneGeometry(
+                12,
+                12
+            );
+
+
+        const materialPiso =
+            new THREE.MeshStandardMaterial({
+                color: 0x1e293b,
+                side: THREE.DoubleSide
+            });
+
+
+        const piso =
+            new THREE.Mesh(
+                geometriaPiso,
+                materialPiso
+            );
+
+
+        piso.rotation.x =
+            Math.PI / 2;
+
+
+        piso.position.y =
+            -1.5;
+
+
+        escena.add(
+            piso
+        );
+
+
+        // =====================================================
+        // LUZ AMBIENTE
+        // =====================================================
+
+        const luzAmbiente =
+            new THREE.AmbientLight(
+                0xffffff,
+                0.7
+            );
+
+
+        escena.add(
+            luzAmbiente
+        );
+
+
+        // =====================================================
+        // LUZ DIRECCIONAL
+        // =====================================================
+
+        const luzDireccional =
+            new THREE.DirectionalLight(
+                0xffffff,
+                1
+            );
+
+
+        luzDireccional.position.set(
+            5,
+            5,
+            5
+        );
+
+
+        escena.add(
+            luzDireccional
+        );
+
+
+        // =====================================================
+        // POSICIÓN DE LA CÁMARA
+        // =====================================================
+
+        camara.position.z = 7;
+
+
+        // =====================================================
+        // INTERACCIÓN CON EL MOUSE
+        // =====================================================
+
+        let arrastrando = false;
+
+        let anteriorX = 0;
+
+        let anteriorY = 0;
+
+
+        renderer.domElement.addEventListener(
+            "mousedown",
+            function (evento) {
+
+                arrastrando = true;
+
+                anteriorX =
+                    evento.clientX;
+
+                anteriorY =
+                    evento.clientY;
+            }
+        );
+
+
+        renderer.domElement.addEventListener(
+            "mouseup",
+            function () {
+
+                arrastrando = false;
+            }
+        );
+
+
+        renderer.domElement.addEventListener(
+            "mouseleave",
+            function () {
+
+                arrastrando = false;
+            }
+        );
+
+
+        renderer.domElement.addEventListener(
+            "mousemove",
+            function (evento) {
+
+                if (!arrastrando) {
+                    return;
+                }
+
+
+                const deltaX =
+                    evento.clientX -
+                    anteriorX;
+
+
+                const deltaY =
+                    evento.clientY -
+                    anteriorY;
+
+
+                caja.rotation.y +=
+                    deltaX * 0.01;
+
+
+                caja.rotation.x +=
+                    deltaY * 0.01;
+
+
+                anteriorX =
+                    evento.clientX;
+
+
+                anteriorY =
+                    evento.clientY;
+            }
+        );
+
+
+        // =====================================================
+        // INTERACCIÓN TÁCTIL
+        // =====================================================
+
+        renderer.domElement.addEventListener(
+            "touchstart",
+            function (evento) {
+
+                if (
+                    evento.touches.length === 1
+                ) {
+
+                    arrastrando = true;
+
+                    anteriorX =
+                        evento.touches[0].clientX;
+
+                    anteriorY =
+                        evento.touches[0].clientY;
+                }
+            }
+        );
+
+
+        renderer.domElement.addEventListener(
+            "touchend",
+            function () {
+
+                arrastrando = false;
+            }
+        );
+
+
+        renderer.domElement.addEventListener(
+            "touchmove",
+            function (evento) {
+
+                if (
+                    !arrastrando ||
+                    evento.touches.length !== 1
+                ) {
+                    return;
+                }
+
+
+                const deltaX =
+                    evento.touches[0].clientX -
+                    anteriorX;
+
+
+                const deltaY =
+                    evento.touches[0].clientY -
+                    anteriorY;
+
+
+                caja.rotation.y +=
+                    deltaX * 0.01;
+
+
+                caja.rotation.x +=
+                    deltaY * 0.01;
+
+
+                anteriorX =
+                    evento.touches[0].clientX;
+
+
+                anteriorY =
+                    evento.touches[0].clientY;
+            }
+        );
+
+
+        // =====================================================
+        // ANIMACIÓN
+        // =====================================================
+
+        function animar() {
+
+            requestAnimationFrame(
+                animar
+            );
+
+
+            if (!arrastrando) {
+
+                caja.rotation.y +=
+                    0.005;
+            }
+
+
+            renderer.render(
+                escena,
+                camara
+            );
+        }
+
+
+        animar();
+
+
+        // =====================================================
+        // RESPONSIVE
+        // =====================================================
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                camara.aspect =
+                    contenedor.clientWidth /
+                    contenedor.clientHeight;
+
+
+                camara.updateProjectionMatrix();
+
+
+                renderer.setSize(
+                    contenedor.clientWidth,
+                    contenedor.clientHeight
+                );
+            }
+        );
+
+    </script>
+
+
+    <!-- CONTROL DE SESIÓN -->
+    <script src="js/comun.js"></script>
+
+</body>
+</html>
