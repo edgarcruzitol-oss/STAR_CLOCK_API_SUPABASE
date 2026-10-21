@@ -12,7 +12,7 @@ document.addEventListener(
     async function () {
 
         const usuario =
-            localStorage.getItem("usuario") ||
+            sessionStorage.getItem("usuario") ||
             "Usuario";
 
         document.getElementById(

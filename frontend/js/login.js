@@ -110,19 +110,24 @@ loginForm.addEventListener(
             // GUARDAR JWT Y DATOS DEL USUARIO
             // =====================================================
 
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "token",
                 datos.access_token
             );
 
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "usuario",
                 datos.usuario
             );
 
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "rol",
                 datos.rol
+            );
+
+            sessionStorage.setItem(
+                "ultimaActividad",
+                Date.now().toString()
             );
 
 

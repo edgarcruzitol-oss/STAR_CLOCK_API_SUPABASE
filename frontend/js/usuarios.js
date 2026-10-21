@@ -1,7 +1,7 @@
 let usuarios = [];
 
 const rolActual =
-    (localStorage.getItem("rol") || "")
+    (sessionStorage.getItem("rol") || "")
         .toLowerCase();
 
 
